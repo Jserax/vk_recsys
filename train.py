@@ -386,7 +386,7 @@ class LightningModel(pl.LightningModule):
     ) -> None:
         users, items = batch
         preds = self.model(users, items)
-        with open("outs.txt", "w") as file:
+        with open("outs.txt", "a") as file:
             for i in range(len(preds)):
                 file.write(f"{users[i][0].item()},{items[i][0].item()},{preds[i]}\n")
 
