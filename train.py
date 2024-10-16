@@ -102,7 +102,7 @@ class ImplicitDataset(Dataset):
         item = self.items[idx]
         if self.targets is not None and self.weights is not None:
             target = self.targets[idx]
-            weight = self.data[idx]
+            weight = self.weights[idx]
             return user, item, target, weight
         else:
             return user, item
