@@ -15,8 +15,8 @@ model:
   user_size: 183404
   item_size: 337727
   source_size: 19613
-  user_emb_size: 192
-  item_emb_size: 192
+  user_emb_size: 128
+  item_emb_size: 128
   source_emb_size: 32
   gender_emb_size: 8
   duration_emb_size: 8
