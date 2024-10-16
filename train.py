@@ -156,9 +156,9 @@ class DataModule(pl.LightningDataModule):
             interactions = pd.read_parquet(self.train_path)
 
             items = items.drop(columns=["embeddings"])
-            interactions["target"] = (interactions.like - interactions.dislike).astype(
+            interactions["target"] = interactions.like.astype(
                 np.int8
-            )
+            ) - interactions.dislike.astype(np.int8)
             interactions = interactions.drop(
                 columns=["timespent", "like", "dislike", "share", "bookmarks"]
             )
@@ -236,7 +236,7 @@ class RecsysModel(nn.Module):
         user_size: int,
         item_size: int,
         source_size: int,
-        pretrained_emb: torch.tensor,
+        pretrained_emb: torch.Tensor,
         user_emb_size: int = 64,
         item_emb_size: int = 64,
         source_emb_size: int = 8,
