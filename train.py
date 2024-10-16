@@ -407,8 +407,8 @@ class LightningModel(pl.LightningModule):
             warmup_steps=8002,
             cycle_steps=64016,
             cycle_mult=1,
-            max_lr=0.002,
-            min_lr=0.000002,
+            max_lr=0.001,
+            min_lr=0.000001,
             gamma=1,
         )
 
