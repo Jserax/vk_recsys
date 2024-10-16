@@ -395,12 +395,12 @@ class LightningModel(pl.LightningModule):
         )
         scheduler = LRCosineScheduler(
             optimizer=optimizer,
-            warmup_steps=190,
-            cycle_steps=380,
-            cycle_mult=2,
-            max_lr=0.2,
-            min_lr=0.00005,
-            gamma=0.3,
+            warmup_steps=128,
+            cycle_steps=256,
+            cycle_mult=1,
+            max_lr=0.001,
+            min_lr=0.000001,
+            gamma=1,
         )
 
         return {
