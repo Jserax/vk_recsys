@@ -9,7 +9,7 @@ data:
   weights: [0.35, 7.15, 850.0]
   val_size: 0.1
   batch_size: 16384
-  num_workers: 2
+  num_workers: 4
   pin_memory: True
 model:
   user_size: 183404
