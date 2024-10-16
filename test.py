@@ -32,7 +32,6 @@ def main(cfg: DictConfig) -> None:
                 refresh_rate=20,
             ),
         ],
-        logger=pl.loggers.wandb.WandbLogger(project="Vk RecSys"),
         **cfg.trainer,
     )
     trainer.test(
