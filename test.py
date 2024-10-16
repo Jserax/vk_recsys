@@ -21,7 +21,7 @@ def main(cfg: DictConfig) -> None:
     datalodaer = datamodule.test_dataloader()
     with open("outs.txt", "a") as file:
         for users, items in datalodaer:
-            preds = model.model(users, items)
+            preds = model.model(users.cuda(), items.cuda())
             for i in range(len(preds)):
                 file.write(f"{users[i][0].item()},{items[i][0].item()},{preds[i]}\n")
 
