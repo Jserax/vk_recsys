@@ -15,24 +15,8 @@ def main(cfg: DictConfig) -> None:
     embeddings = torch.from_numpy(np.stack(items["embeddings"]))
     datamodule = DataModule(**cfg.data)
     model = LightningModel(pretrained_emb=embeddings, **cfg.model)
-    trainer = pl.Trainer(
-        callbacks=[
-            pl.callbacks.ModelCheckpoint(
-                dirpath=".",
-                filename="epoch_{epoch:02d}-{val_recall_100:.3f}-{val_loss:.3f}",
-                monitor="val_loss",
-                mode="min",
-                save_top_k=1,
-                auto_insert_metric_name=True,
-                save_weights_only=False,
-            ),
-            pl.callbacks.LearningRateMonitor(logging_interval="step"),
-            pl.callbacks.TQDMProgressBar(
-                leave=False,
-                refresh_rate=20,
-            ),
-        ],
-        **cfg.trainer,
+    model.load_from_checkpoint(
+        "/kaggle/working/epoch_epoch=00-val_recall_100=0.000-val_loss=0.428.ckpt"
     )
     datamodule.setup()
     datalodaer = datamodule.test_dataloader()
