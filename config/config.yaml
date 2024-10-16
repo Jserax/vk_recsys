@@ -24,7 +24,7 @@ model:
   dropout: 0.4
 trainer:
   min_epochs: 1
-  max_epochs: 8
+  max_epochs: 3
   accelerator: gpu
   precision: 16
   devices: 1
