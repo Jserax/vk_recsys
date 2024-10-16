@@ -87,10 +87,10 @@ class ImplicitDataset(Dataset):
         *args,
         **kwargs,
     ):
-        self.users = users.long()
-        self.items = items.long()
-        self.targets = targets.float()
-        self.weights = weights.float()
+        self.users = users
+        self.items = items
+        self.targets = targets
+        self.weights = weights
 
     def __len__(self) -> int:
         return self.users.size(0)
@@ -266,26 +266,30 @@ class RecsysModel(nn.Module):
         )
         self.main = nn.Sequential(
             nn.Dropout(dropout),
+            nn.LayerNorm(emb_size),
             nn.Linear(emb_size, 256),
             nn.LeakyReLU(0.2, True),
             nn.Dropout(dropout),
+            nn.LayerNorm(256),
             nn.Linear(256, 128),
             nn.LeakyReLU(0.2, True),
             nn.Dropout(dropout),
+            nn.LayerNorm(128),
             nn.Linear(128, 64),
             nn.LeakyReLU(0.2, True),
             nn.Dropout(dropout),
+            nn.LayerNorm(64),
             nn.Linear(64, 1),
         )
 
-    def forward(self, user: torch.tensor, items: torch.tensor):
-        user_emb = self.user_emb(user[:, 0])
-        gender_emb = self.gender_emb(user[:, 1])
+    def forward(self, user: torch.Tensor, items: torch.Tensor) -> torch.Tensor:
+        user_emb = self.user_emb(user[:, 0].long())
+        gender_emb = self.gender_emb(user[:, 1].long())
         age_emb = self.age_emb(user[:, 2].unsqueeze(-1).float())
 
-        item_emb = self.item_emb(items[:, 0])
-        item_pre_emb = self.pretrained_emb[items[:, 0]]
-        source_emb = self.source_emb(items[:, 1])
+        item_emb = self.item_emb(items[:, 0].long())
+        item_pre_emb = self.pretrained_emb[items[:, 0].long()]
+        source_emb = self.source_emb(items[:, 1].long())
         duration_emb = self.duration_emb(items[:, 2].unsqueeze(-1).float())
 
         x = torch.cat(
