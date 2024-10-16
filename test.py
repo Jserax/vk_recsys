@@ -34,11 +34,13 @@ def main(cfg: DictConfig) -> None:
         ],
         **cfg.trainer,
     )
-    trainer.test(
-        model=model,
-        datamodule=datamodule,
-        ckpt_path="/kaggle/working/epoch_epoch=00-val_recall_100=0.000-val_loss=0.428.ckpt",
-    )
+    datamodule.setup()
+    datalodaer = datamodule.test_dataloader()
+    with open("outs.txt", "a") as file:
+        for users, items in datalodaer:
+            preds = model.model(users, items)
+            for i in range(len(preds)):
+                file.write(f"{users[i][0].item()},{items[i][0].item()},{preds[i]}\n")
 
 
 if __name__ == "__main__":
