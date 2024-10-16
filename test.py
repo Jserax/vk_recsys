@@ -14,8 +14,7 @@ def main(cfg: DictConfig) -> None:
     items = pd.read_parquet(cfg.data.items_path)
     embeddings = torch.from_numpy(np.stack(items["embeddings"]))
     datamodule = DataModule(**cfg.data)
-    model = LightningModel(pretrained_emb=embeddings, **cfg.model)
-    model.load_from_checkpoint(
+    model = LightningModel.load_from_checkpoint(
         "/kaggle/working/epoch_epoch=00-val_recall_100=0.000-val_loss=0.428.ckpt"
     )
     datamodule.setup()
