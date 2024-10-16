@@ -38,7 +38,7 @@ def main(cfg: DictConfig) -> None:
     trainer.test(
         model=model,
         datamodule=datamodule,
-        ckpt_path="epoch_epoch=00-val_recall_100=0.000-val_loss=0.428.ckpt",
+        ckpt_path="/kaggle/working/epoch_epoch=00-val_recall_100=0.000-val_loss=0.428.ckpt",
     )
 
 
