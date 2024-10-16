@@ -181,7 +181,9 @@ class DataModule(pl.LightningDataModule):
                 interactions.iloc[train_idx:, [1, 5, 6]].values
             )
             val_targets = torch.from_numpy(interactions.iloc[train_idx:, 2].values)
-            val_weights = torch.full_like(val_targets, fill_value=self.weights[0])
+            val_weights = torch.full_like(
+                val_targets, fill_value=self.weights[0], dtype=torch.float32
+            )
             val_weights[val_targets == 1] = self.weights[1]
             val_weights[val_targets == -1] = self.weights[2]
             test = pd.read_csv(self.test_path)
@@ -413,7 +415,7 @@ class LightningModel(pl.LightningModule):
         }
 
 
-@hydra.main(version_base="1.3", config_path="./config", config_name="train.yaml")
+@hydra.main(version_base="1.3", config_path="./config", config_name="config.yaml")
 def main(cfg: DictConfig) -> None:
     wandb.login()
     items = pd.read_parquet(cfg.data.items_path)
