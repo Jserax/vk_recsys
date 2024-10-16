@@ -93,7 +93,7 @@ class ImplicitDataset(Dataset):
         self.weights = weights
 
     def __len__(self) -> int:
-        return self.target.size(0)
+        return self.users.size(0)
 
     def __getitem__(
         self, idx: int
