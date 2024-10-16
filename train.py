@@ -82,14 +82,14 @@ class ImplicitDataset(Dataset):
         self,
         users: torch.Tensor,
         items: torch.Tensor,
-        targets: torch.Tensor,
-        weights: torch.Tensor,
+        targets: torch.Tensor = None,
+        weights: torch.Tensor = None,
         *args,
         **kwargs,
     ):
         self.users = users
         self.items = items
-        self.target = targets
+        self.targets = targets
         self.weights = weights
 
     def __len__(self) -> int:
@@ -100,9 +100,12 @@ class ImplicitDataset(Dataset):
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         user = self.users[idx]
         item = self.items[idx]
-        target = self.target[idx]
-        weight = self.data[idx]
-        return user, item, target, weight
+        if self.targets is not None and self.weights is not None:
+            target = self.targets[idx]
+            weight = self.data[idx]
+            return user, item, target, weight
+        else:
+            return user, item
 
 
 class DataModule(pl.LightningDataModule):
