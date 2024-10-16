@@ -87,10 +87,10 @@ class ImplicitDataset(Dataset):
         *args,
         **kwargs,
     ):
-        self.users = users
-        self.items = items
-        self.targets = targets
-        self.weights = weights
+        self.users = users.long()
+        self.items = items.long()
+        self.targets = targets.float()
+        self.weights = weights.float()
 
     def __len__(self) -> int:
         return self.users.size(0)
