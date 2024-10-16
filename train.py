@@ -351,7 +351,7 @@ class LightningModel(pl.LightningModule):
     ) -> torch.Tensor:
         users, items, target, weights = batch
         preds = self.model(users, items)
-        train_loss = (weights * self.criterion(preds, target)).mean()
+        train_loss = (weights * self.criterion(preds, target.float())).mean()
         self.log(
             "train_loss",
             train_loss,
@@ -369,7 +369,7 @@ class LightningModel(pl.LightningModule):
     ) -> None:
         users, items, target, weights = batch
         preds = self.model(users, items)
-        val_loss = (weights * self.criterion(preds, target)).mean()
+        val_loss = (weights * self.criterion(preds, target.float())).mean()
         self.log(
             "val_loss",
             val_loss,
