@@ -404,8 +404,8 @@ class LightningModel(pl.LightningModule):
         )
         scheduler = LRCosineScheduler(
             optimizer=optimizer,
-            warmup_steps=128,
-            cycle_steps=256,
+            warmup_steps=32008,
+            cycle_steps=256064,
             cycle_mult=1,
             max_lr=0.001,
             min_lr=0.000001,
